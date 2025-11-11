@@ -13,3 +13,16 @@
  jawab: BuildContext itu ibarat alamat rumah di dalam sebuah komplek nah ini penting supaya flutter tau di mana posisi widgetnya. Penggunaannya di metode build sebagai parameter yang menunjukkan posisi widget di dalam pohon widget.
  6. Jelaskan konsep "hot reload" di Flutter dan bagaimana bedanya dengan "hot restart".
  jawab: hot reload menyegarkan tampilan UI tanpa kehilangan state (data saat ini) sedangkan hot restart menjalankan ulang aplikasi dari awal sehingga data di memori hilang.
+
+**Tugas VIII**
+
+1. Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement() pada Flutter. Dalam kasus apa sebaiknya masing-masing digunakan pada aplikasi Football Shop kamu?
+jawab: kita tahu bahwa riwayat page yang dikunjungi oleh user disimpan di dalam sebuah page. navigator.push() menambahkan page yang baru di buka ke atas stack tanpa menghapus page saat ini di dalam stack. Sedangkan navigator.pushReplacement() itu menghapus page saat ini dari stack. navigator.push() sebaiknya digunakan ketika user meilhat detail produk karena user bisa back ke page sebelumnya yakni list of produk. Sedangkan untuk navigator.pushReplacement() digunakan setelah user mengisi form(menambahkan produk), user diarahkan ke homepage bukan ke form (page sebelumnya). 
+
+2. Bagaimana kamu memanfaatkan hierarchy widget seperti Scaffold, AppBar, dan Drawer untuk membangun struktur halaman yang konsisten di seluruh aplikasi?
+jawab: saya menggunakan scaffold sebagai kerangka utama bangunan yang membungkus widget widget lain kemudian appbar untuk judul halaman dan drawer untuk navigasi samping. Nah scaffold menjamin struktur di setiap page selalu sama -> setiap page mempunyai header yang seragam (warna sama, font sama, posisi sama) dan Navigasi ke halaman lain selalu lewat cara yang sama, tidak berubah-ubah.
+
+3. Dalam konteks desain antarmuka, apa kelebihan menggunakan layout widget seperti Padding, SingleChildScrollView, dan ListView saat menampilkan elemen-elemen form? Berikan contoh penggunaannya dari aplikasi kamu.
+jawab: padding digunakan untuk memberi jarak antar widget supaya tidak terlalu menempel contoh penggunaannya di form atau tombol tombol di halaman utama (supaya lebih enak untuk dilihat dan tidak bercampur), SingleChildScrollView digunakan supaya dapat menscroll suatu konten di halaman terlalu panjang tanpa ini sebagian form bisa saja tertutup atau muncul error overflow, dan ListView secara otomatis sudah scrollable dan cocok jika ada banyak elemen yang urut ke bawah contohnya pada drawer.
+4. Bagaimana kamu menyesuaikan warna tema agar aplikasi Football Shop memiliki identitas visual yang konsisten dengan brand toko?
+jawab: kita bisa mengatur ThemeData pada MaterialApp sehingga warna utama (primary) dan warna aksen (secondary) mengikuti identitas brand Football Shop atau sesuai colour palette yang kita buat. Setelah itu widget - widget lain dapat langsung mengambil warna warna tersebut tanpa perlu mengatur ulang.
