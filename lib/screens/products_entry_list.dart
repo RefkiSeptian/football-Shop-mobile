@@ -95,10 +95,10 @@ class _ProductsEntryListPageState extends State<ProductsEntryListPage>
 
   Widget _buildProductList(CookieRequest request, {required String filterType}) {
     return FutureBuilder(
-      // PENTING: Gunakan endpoint yang berbeda!
+      
       future: filterType == 'my' 
-          ? fetchMyProducts(request)  // ← Endpoint khusus
-          : fetchProducts(request),   // ← Endpoint all
+          ? fetchMyProducts(request)  
+          : fetchProducts(request),   
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {
           return const Center(child: CircularProgressIndicator());
