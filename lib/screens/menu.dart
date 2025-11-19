@@ -6,9 +6,9 @@ class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
   final List<ItemHomepage> items = [
-  ItemHomepage("All Products", Icons.list_alt, Colors.cyanAccent),
-  ItemHomepage("My Products", Icons.inventory, Colors.green),
-  ItemHomepage("Create Product", Icons.add, Colors.redAccent),
+  ItemHomepage("All Products", Icons.list_alt),
+  ItemHomepage("Create Product", Icons.add),
+  ItemHomepage("Logout", Icons.logout_sharp),
 ];
 
  @override
@@ -26,7 +26,7 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
         // Warna latar belakang AppBar diambil dari skema warna tema aplikasi.
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       // Body halaman dengan padding di sekelilingnya.
       body: Padding(
@@ -87,8 +87,7 @@ class MyHomePage extends StatelessWidget {
 class ItemHomepage {
  final String name;
  final IconData icon;
- final Color color;
 
- ItemHomepage(this.name, this.icon, this.color);
+ ItemHomepage(this.name, this.icon);
 }
 

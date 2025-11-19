@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:football_shop/widgets/left_drawer.dart';
+import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:football_shop/screens/menu.dart';
 
 class ProductsFormPage extends StatefulWidget {
     const ProductsFormPage({super.key});
@@ -25,13 +29,14 @@ class _ProductsFormPageState extends State<ProductsFormPage> {
     'ball',
     'equipment',
     'accessories',
-    'accessories',
+    'others',
   ];
     @override
     Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Ada Produk Baru? Tambahkan di Sini!')),
+        title: const Center(child: Text('Ada Produk Baru?')),
         backgroundColor: Theme.of(context).colorScheme.secondary,
         foregroundColor: Colors.white,
       ),
@@ -245,42 +250,43 @@ class _ProductsFormPageState extends State<ProductsFormPage> {
                     backgroundColor:
                         MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Produk berhasil tersimpan'),
-                            content: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                children: [
-                                  Text('Nama Produk: $_name'),
-                                  Text("Deskripsi Produk: $_description"),
-                                  Text("Kategori Produk: $_category"),
-                                  Text("URL Thumbnail Produk: $_thumbnail"),
-                                  Text("Produk Unggulan: $_isFeatured"),
-                                  Text("Brand Produk: $_brand"),
-                                  Text("Stok Produk: $_stok"),
-                                  Text("Harga Produk: $_price"),
-                                ],
-                              ),
-                            ),
-                            actions: [
-                              TextButton(
-                                child: const Text('OK'),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  _formKey.currentState!.reset();
-                                },
-                              ),
-                            ],
-                          );
-                        },
+                      // TODO: Replace the URL with your app's URL
+                      // To connect Android emulator with Django on localhost, use URL http://10.0.2.2/
+                      // If you using chrome,  use URL http://localhost:8000
+                      
+                      final response = await request.postJson(
+                        "https://refki-septian-footballshop.pbp.cs.ui.ac.id//create-flutter/",
+                        jsonEncode({
+                          "name": _name,
+                          "price": _price,
+                          "description": _description,
+                          "thumbnail": _thumbnail,
+                          "category": _category,
+                          "is_featured": _isFeatured,
+                          "brand":_brand,
+                          "stok":_stok,
+                        }),
                       );
-                  
+                      if (context.mounted) {
+                        if (response['status'] == 'success') {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Produk berhasil ditambahkan!"),
+                          ));
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyHomePage()),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Something went wrong, please try again."),
+                          ));
+                        }
+                      }
                     }
                   },
                   child: const Text(
